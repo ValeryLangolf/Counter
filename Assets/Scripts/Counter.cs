@@ -6,6 +6,8 @@ public class Counter : MonoBehaviour
 {
     [SerializeField, Min(0.1f)] private float _timeStepInSeconds = 0.5f;
 
+    private const int MouseButtonLeft = 0;
+
     public event Action<int> CountChanged;
 
     private int _count;
@@ -14,7 +16,7 @@ public class Counter : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(MouseButtonLeft))
         {
             _isCounter = !_isCounter;
 
