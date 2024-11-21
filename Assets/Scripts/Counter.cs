@@ -10,6 +10,7 @@ public class Counter : MonoBehaviour
 
     private int _count;
     private bool _isCounter;
+    private Coroutine _coroutine;
 
     private void Update()
     {
@@ -19,8 +20,13 @@ public class Counter : MonoBehaviour
 
             if (_isCounter)
             {
-                StopCoroutine(Countup());
-                StartCoroutine(Countup());
+                if (_coroutine != null)
+                {
+                    StopCoroutine(_coroutine);
+                    _coroutine = null;
+                }
+
+                _coroutine = StartCoroutine(Countup());
             }
         }
     }

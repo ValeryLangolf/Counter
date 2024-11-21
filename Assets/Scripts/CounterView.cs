@@ -3,7 +3,6 @@ using TMPro;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
 [RequireComponent(typeof(Counter))]
-
 public class CounterView : MonoBehaviour
 {
     private TextMeshProUGUI _text;
