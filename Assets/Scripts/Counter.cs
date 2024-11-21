@@ -1,21 +1,15 @@
+using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
-
-[RequireComponent(typeof(TextMeshProUGUI))]
 
 public class Counter : MonoBehaviour
 {
     [SerializeField, Min(0.1f)] private float _timeStepInSeconds = 0.5f;
 
+    public event Action<int> CountChanged;
+
     private int _count;
     private bool _isCounter;
-    private TextMeshProUGUI _text;
-
-    private void Awake()
-    {
-        _text = GetComponent<TextMeshProUGUI>();
-    }
 
     private void Update()
     {
@@ -25,7 +19,7 @@ public class Counter : MonoBehaviour
 
             if (_isCounter)
             {
-                StopAllCoroutines();
+                StopCoroutine(Countup());
                 StartCoroutine(Countup());
             }
         }
@@ -33,12 +27,14 @@ public class Counter : MonoBehaviour
 
     private IEnumerator Countup()
     {
+        WaitForSeconds timeStep = new WaitForSeconds(_timeStepInSeconds);
+
         while (_isCounter)
         {
-            yield return new WaitForSeconds(_timeStepInSeconds);
+            yield return timeStep;
 
             ++_count;
-            _text.text = _count.ToString();
+            CountChanged?.Invoke(_count);            
         }
     }
 }
